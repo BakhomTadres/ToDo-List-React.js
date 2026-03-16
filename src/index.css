@@ -83,7 +83,7 @@ body {
   font-size: 27px;
   color: teal;
   background-color: #eee;
-  width: calc(100% - 140px);
+  width: calc(100% - 160px);
   padding: 10px 10px 10px 20px;
   border-radius: 6px;
 }
@@ -116,6 +116,9 @@ body {
   }
   .delete-all-btn {
     left: 65% !important;
+  }
+  .task-item .task-name {
+    width: calc(100% - 140px) !important;
   }
 }
 .checked {
