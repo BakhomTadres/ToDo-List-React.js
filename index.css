@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-color: teal;
+}
+.to-do-list {
+  background-color: #fff;
+  width: 500px;
+  min-height: 300px;
+  padding: 20px;
+  border-radius: 6px;
+  position: absolute;
+  left: 50%;
+  top: 100px;
+  transform: translate(-50%, 0);
+  max-height: 80vh;
+  overflow-y: scroll;
+  scrollbar-color: blue;
+}
+.to-do-list .top-todo-list {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.to-do-list .top-todo-list label {
+  position: absolute;
+  top: 50px;
+  left: 35px;
+  cursor: text;
+  color: #777;
+  font-size: 24px;
+  transition: 0.3s;
+}
+.to-do-list .top-todo-list input:focus + label,
+.to-do-list .top-todo-list input:valid + label {
+  top: 30px;
+  left: 40px;
+  cursor: text;
+  color: teal;
+  font-size: 18px;
+  background-color: #fff;
+}
+.to-do-list .top-todo-list input {
+  display: inline-block;
+  width: calc(100% - 110px);
+  padding: 10px 20px;
+  caret-color: teal;
+  font-size: 20px;
+  border: 1px solid #333;
+  outline: none;
+  border-radius: 6px;
+}
+.to-do-list .top-todo-list input:focus {
+  border: 2px solid teal;
+}
+.to-do-list .top-todo-list button {
+  padding: 16px 20px;
+  width: 100px;
+  background-color: teal;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.to-do-list .top-todo-list button:hover {
+  background-color: rgb(40, 94, 94);
+}
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+}
+.task-item .task-name {
+  font-weight: bold;
+  list-style: none;
+  font-size: 27px;
+  color: teal;
+  background-color: #eee;
+  width: calc(100% - 140px);
+  padding: 10px 10px 10px 20px;
+  border-radius: 6px;
+}
+.task-item button {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.5s;
+  margin: 0px 3px;
+}
+.task-item button:hover {
+  color: #fff !important;
+}
+.task-item button:first-child:hover {
+  background-color: #be0404;
+}
+.task-item button:nth-child(2):hover {
+  background-color: #2196f3;
+}
+.task-item button:last-child:hover {
+  background-color: rgb(40, 94, 94) !important;
+}
+@media (max-width: 768px) {
+  .to-do-list,
+  .popup-box {
+    width: 90% !important;
+  }
+  .delete-all-btn {
+    left: 70% !important;
+  }
+}
+.checked {
+  background-color: teal;
+}
+.buttons {
+  padding: 5px;
+  text-align: center;
+  margin: 10px 0;
+}
+.buttons button,
+.delete-all-btn {
+  margin: 5px 2.5px 5px 2.5px;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.buttons button.active,
+.delete-all-btn {
+  background-color: #da3636;
+  color: #fff;
+  transition: 0.3s;
+}
+.buttons button.active:hover,
+.delete-all-btn:hover {
+  background-color: #bb2121;
+}
+.delete-all-btn {
+  position: relative;
+  left: 80%;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #000000e0;
+  width: 100%;
+  min-height: 150%;
+  z-index: 1;
+}
+.popup-box {
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 6px;
+  z-index: 2;
+}
+.popup-box p {
+  color: #777;
+  font-size: 18px;
+  margin: 10px 0;
+}
+.popup-box button {
+  font-size: 18px;
+  border: none;
+  background-color: white;
+  color: #f44336;
+  display: inline-block;
+  margin: 20px 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.popup-box h2 {
+  color: #333;
+  margin: 10px 0;
+  font-weight: 600;
+  font-size: 28px;
+}
+.popup-box input {
+  width: 250px;
+  display: block;
+  margin: 10px 0;
+  border: 1px solid black;
+  outline: none;
+  caret-color: #2196f3;
+  padding: 5px 15px;
+  font-size: 20px;
+}
+.popup-box label {
+  position: absolute;
+  top: 75px;
+  left: 35px;
+  cursor: text;
+  color: #777;
+  font-size: 24px;
+  transition: 0.3s;
+}
+.popup-box input:focus,
+.popup-box input:valid {
+  border: 1px solid #2196f3;
+}
+.popup-box input:focus + label,
+.popup-box input:valid + label {
+  top: 60px;
+  left: 30px;
+  cursor: text;
+  color: #2196f3;
+  font-size: 18px;
+  background-color: #fff;
+}
+.edit-btn,
+.delete-btn {
+  transition: 0.3s;
+}
+.edit-btn:hover {
+  color: #396bf3 !important;
+}
+.delete-btn:hover {
+  color: #d11414 !important;
+}
+button:disabled,
+button:disabled:hover {
+  background-color: gray !important;
+}
+.to-do-list::-webkit-scrollbar {
+  width: 16px;
+}
+.to-do-list::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: transparent;
+}
+.to-do-list::-webkit-scrollbar-thumb {
+  background: #008080;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  transition: 0.3s;
+}
+.to-do-list::-webkit-scrollbar-thumb:hover {
+  background: #005a5a;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
