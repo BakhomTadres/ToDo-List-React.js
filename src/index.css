@@ -83,7 +83,7 @@ body {
   font-size: 27px;
   color: teal;
   background-color: #eee;
-  width: calc(100% - 160px);
+  width: calc(100% - 140px);
   padding: 10px 10px 10px 20px;
   border-radius: 6px;
 }
@@ -114,6 +114,9 @@ body {
   .popup-box {
     width: 90% !important;
   }
+  .delete-all-btn {
+    left: 70%;
+  }
 }
 .checked {
   background-color: teal;
@@ -121,7 +124,7 @@ body {
 .buttons {
   padding: 5px;
   text-align: center;
-  margin: 10px 0;
+  margin: 0px 5px 0 0;
 }
 .buttons button,
 .delete-all-btn {
