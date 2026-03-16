@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import ToDoList from './Components/ToDoList'
-import './App.css'
+import './Style.css'
 
 function App() {
   
-
   return (
     <ToDoList />
   )

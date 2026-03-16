@@ -115,7 +115,7 @@ body {
     width: 90% !important;
   }
   .delete-all-btn {
-    left: 70%;
+    left: 65% !important;
   }
 }
 .checked {
@@ -124,11 +124,11 @@ body {
 .buttons {
   padding: 5px;
   text-align: center;
-  margin: 0px 5px 0 0;
+  margin: 10px 0;
 }
 .buttons button,
 .delete-all-btn {
-  margin: 0 5px;
+  margin: 5px 2.5px 5px 2.5px;
   border: none;
   padding: 10px 15px;
   cursor: pointer;
