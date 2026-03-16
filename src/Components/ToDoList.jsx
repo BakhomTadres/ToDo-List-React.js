@@ -30,12 +30,13 @@ function ToDoList() {
   ]);
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-    setTasks(savedTasks);
     if (savedTasks.length > 0) {
       const maxId = Math.max(...savedTasks.map((t) => t.id));
       setId(maxId + 1);
+      setTasks(savedTasks);
     } else {
       setId(1);
+      setTasks([])
     }
   }, []);
   // Functions For ToDo
