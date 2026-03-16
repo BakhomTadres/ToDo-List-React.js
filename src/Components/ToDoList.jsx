@@ -28,15 +28,27 @@ function ToDoList() {
       active: false,
     },
   ]);
-  useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-    if (savedTasks.length > 0) {
-      const maxId = Math.max(...savedTasks.map((t) => t.id));
-      setId(maxId + 1);
-      setTasks(savedTasks);
+useEffect(() => {
+    const savedData = localStorage.getItem("tasks");
+        if (savedData) {
+      try {
+        const savedTasks = JSON.parse(savedData);
+        if (Array.isArray(savedTasks) && savedTasks.length > 0) {
+          setTasks(savedTasks);
+          const maxId = Math.max(...savedTasks.map((t) => t.id));
+          setId(maxId + 1);
+        } else {
+          setTasks([]);
+          setId(1);
+        }
+      } catch (error) {
+        console.error("Error parsing tasks:", error);
+        setTasks([]);
+        setId(1);
+      }
     } else {
+      setTasks([]);
       setId(1);
-      setTasks([])
     }
   }, []);
   // Functions For ToDo
