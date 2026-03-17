@@ -4,7 +4,7 @@ import ToDoList from './Components/ToDoList'
 import './Style.css'
 
 function App() {
-  
+
   return (
     <ToDoList />
   )

@@ -28,9 +28,9 @@ function ToDoList() {
       active: false,
     },
   ]);
-useEffect(() => {
+  useEffect(() => {
     const savedData = localStorage.getItem("tasks");
-        if (savedData) {
+    if (savedData) {
       try {
         const savedTasks = JSON.parse(savedData);
         if (Array.isArray(savedTasks) && savedTasks.length > 0) {
