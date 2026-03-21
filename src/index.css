@@ -4,8 +4,11 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+:root {
+  --primary-color: teal;
+}
 body {
-  background-color: teal;
+  background-color: var(--primary-color);
 }
 .to-do-list {
   background-color: #fff;
@@ -19,7 +22,6 @@ body {
   transform: translate(-50%, 0);
   max-height: 80vh;
   overflow-y: scroll;
-  scrollbar-color: blue;
 }
 .to-do-list .top-todo-list {
   margin-top: 20px;
@@ -41,7 +43,7 @@ body {
   top: 30px;
   left: 40px;
   cursor: text;
-  color: teal;
+  color: var(--primary-color);
   font-size: 18px;
   background-color: #fff;
 }
@@ -49,19 +51,19 @@ body {
   display: inline-block;
   width: calc(100% - 110px);
   padding: 10px 20px;
-  caret-color: teal;
+  caret-color: var(--primary-color);
   font-size: 20px;
   border: 1px solid #333;
   outline: none;
   border-radius: 6px;
 }
 .to-do-list .top-todo-list input:focus {
-  border: 2px solid teal;
+  border: 2px solid var(--primary-color);
 }
 .to-do-list .top-todo-list button {
   padding: 16px 20px;
   width: 100px;
-  background-color: teal;
+  background-color: var(--primary-color);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -81,11 +83,12 @@ body {
   font-weight: bold;
   list-style: none;
   font-size: 27px;
-  color: teal;
+  color: var(--primary-color);
   background-color: #eee;
   width: calc(100% - 160px);
   padding: 10px 10px 10px 20px;
   border-radius: 6px;
+  overflow-x: scroll;
 }
 .task-item button {
   width: 40px;
@@ -119,10 +122,11 @@ body {
   }
   .task-item .task-name {
     width: calc(100% - 140px) !important;
+    font-size: 22px;
   }
 }
 .checked {
-  background-color: teal;
+  background-color: var(--primary-color);
 }
 .buttons {
   padding: 5px;
@@ -237,6 +241,37 @@ body {
 button:disabled,
 button:disabled:hover {
   background-color: gray !important;
+}
+.progress .info {
+  background-color: #eee;
+  width: fit-content;
+  padding: 5px 20px;
+  border-radius: 6px;
+}
+span.number {
+  color: var(--primary-color);
+}
+.progress-line {
+  margin: 10px 0;
+  height: 50px;
+  position: relative;
+}
+.progress-line .line {
+  position: absolute;
+  left: 0;
+  top: 40%;
+  transform: translateY(-50%);
+  background-color: var(--primary-color);
+  transition: 0.5s;
+  height: 10px;
+  display: inline-block;
+  border-radius: 6px;
+}
+.progress-line .progress-width {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  color: var(--primary-color);
 }
 .to-do-list::-webkit-scrollbar {
   width: 16px;

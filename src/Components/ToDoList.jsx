@@ -2,6 +2,12 @@ import { use, useEffect, useState } from "react";
 import ToDo from "./ToDo";
 import Popup from "./Popup";
 function ToDoList() {
+  const [allNumber, setAllNumber] = useState(() => {
+    return Number(localStorage.getItem("allNumber")) || 0;
+  });
+  const [completedNumber, setCompletedNumber] = useState(() => {
+    return Number(localStorage.getItem("completedNumber")) || 0;
+  });
   const [id, setId] = useState(1);
   const [inputValue, setInputValue] = useState("");
   const [tasks, setTasks] = useState([]);
@@ -28,6 +34,15 @@ function ToDoList() {
       active: false,
     },
   ]);
+  useEffect(() => {
+    setAllNumber(tasks.length);
+    setCompletedNumber(tasks.filter((t) => t.isCompleted).length);
+    localStorage.setItem("allNumber", tasks.length);
+    localStorage.setItem(
+      "completedNumber",
+      tasks.filter((t) => t.isCompleted).length,
+    );
+  }, [tasks]);
   useEffect(() => {
     const savedData = localStorage.getItem("tasks");
     if (savedData) {
@@ -92,7 +107,6 @@ function ToDoList() {
     });
     setTasks(tasksFilter);
     setShow(false);
-    localStorage.setItem("tasks", JSON.stringify(tasksFilter));
   }
   function handleCheckClick(id) {
     let tasksCheck = tasks.map((t) => {
@@ -189,7 +203,9 @@ function ToDoList() {
             required
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                handleAddClick();
+                if (inputValue != "") {
+                  handleAddClick();
+                }
               }
             }}
           />
@@ -201,6 +217,46 @@ function ToDoList() {
           </button>
         </div>
         <div className="buttons">{buttonsList}</div>
+        <div className="progress">
+          <div className="progress-line">
+            <span
+              className="line"
+              style={{
+                width:
+                  localStorage.getItem("allNumber") != 0
+                    ? (localStorage.getItem("completedNumber") /
+                        localStorage.getItem("allNumber")) *
+                        100 +
+                      "%"
+                    : 0,
+              }}
+            ></span>
+            <span className="progress-width">
+              {localStorage.getItem("allNumber") != 0
+                ? (
+                    (localStorage.getItem("completedNumber") /
+                      localStorage.getItem("allNumber")) *
+                    100
+                  ).toFixed(2)
+                : 0}
+              %
+            </span>
+          </div>
+          <div className="info">
+            <span>
+              All:{" "}
+              <span className="number">
+                {localStorage.getItem("allNumber")}
+              </span>{" "}
+            </span>
+            <span>
+              Completed:{" "}
+              <span className="number">
+                {localStorage.getItem("completedNumber")}
+              </span>
+            </span>
+          </div>
+        </div>
         <button
           className="delete-all-btn"
           onClick={() => {

@@ -32,7 +32,6 @@ export default function ({
             <p>You cannot undo deletion if you select the delete button.</p>
           </>
         )}
-
         <button
           className={type == "edit" ? "edit-btn" : "delete-btn"}
           style={{ color: `${type == "edit" ? "#2196F3" : "#F44336"}` }}
