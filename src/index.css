@@ -241,6 +241,7 @@ body {
 button:disabled,
 button:disabled:hover {
   background-color: gray !important;
+  cursor: no-drop !important;
 }
 .progress .info {
   background-color: #eee;
