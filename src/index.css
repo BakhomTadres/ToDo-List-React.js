@@ -86,7 +86,7 @@ body {
   color: var(--primary-color);
   background-color: #eee;
   width: calc(100% - 160px);
-  padding: 10px 10px 10px 20px;
+  padding: 10px 20px 0px 20px;
   border-radius: 6px;
   overflow-x: scroll;
 }
@@ -100,17 +100,19 @@ body {
   transition: 0.5s;
   margin: 0px 3px;
 }
-.task-item button:hover {
-  color: #fff !important;
-}
-.task-item button:first-child:hover {
-  background-color: #be0404;
-}
-.task-item button:nth-child(2):hover {
-  background-color: #2196f3;
-}
-.task-item button:last-child:hover {
-  background-color: rgb(40, 94, 94) !important;
+@media (min-width: 769px) {
+  .task-item button:hover {
+    color: #fff !important;
+  }
+  .task-item button:first-child:hover {
+    background-color: #be0404;
+  }
+  .task-item button:nth-child(2):hover {
+    background-color: #2196f3;
+  }
+  .task-item button:last-child:hover {
+    background-color: rgb(40, 94, 94) !important;
+  }
 }
 @media (max-width: 768px) {
   .to-do-list,
@@ -274,21 +276,34 @@ span.number {
   left: 10px;
   color: var(--primary-color);
 }
-.to-do-list::-webkit-scrollbar {
+.notification {
+  position: absolute;
+  bottom: 10px;
+  width: fit-content;
+  background-color: wheat;
+  left: 10px;
+  border-radius: 6px;
+  color: teal;
+}
+.to-do-list::-webkit-scrollbar,
+.task-name::-webkit-scrollbar {
   width: 16px;
 }
-.to-do-list::-webkit-scrollbar-track {
+.to-do-list::-webkit-scrollbar-track,
+.task-name::-webkit-scrollbar-track {
   border-radius: 10px;
   background: transparent;
 }
-.to-do-list::-webkit-scrollbar-thumb {
+.to-do-list::-webkit-scrollbar-thumb,
+.task-name::-webkit-scrollbar-thumb {
   background: #008080;
   border-radius: 10px;
   border: 3px solid transparent;
   background-clip: content-box;
   transition: 0.3s;
 }
-.to-do-list::-webkit-scrollbar-thumb:hover {
+.to-do-list::-webkit-scrollbar-thumb:hover,
+.task-name::-webkit-scrollbar-thumb:hover {
   background: #005a5a;
   border: 3px solid transparent;
   background-clip: content-box;

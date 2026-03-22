@@ -1,7 +1,10 @@
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import ToDo from "./ToDo";
 import Popup from "./Popup";
+import { useContext } from "react";
+import { NotificationContext } from "../Contexts/NotificationContext";
 function ToDoList() {
+  const { showHideNotification } = useContext(NotificationContext);
   const [allNumber, setAllNumber] = useState(() => {
     return Number(localStorage.getItem("allNumber")) || 0;
   });
@@ -100,6 +103,7 @@ function ToDoList() {
     );
     setId((id) => id + 1);
     setInputValue("");
+    showHideNotification("Add done");
   }
   function handleDeleteClick(id) {
     const tasksFilter = tasks.filter((task) => {
@@ -107,13 +111,18 @@ function ToDoList() {
     });
     setTasks(tasksFilter);
     setShow(false);
+    showHideNotification("Delete done");
   }
   function handleCheckClick(id) {
     let tasksCheck = tasks.map((t) => {
       if (t.id == id) {
-        t.isCompleted == true
-          ? (t.isCompleted = false)
-          : (t.isCompleted = true);
+        if (t.isCompleted == true) {
+          t.isCompleted = false;
+          showHideNotification("Uncheck done");
+        } else {
+          t.isCompleted = true;
+          showHideNotification("Check done");
+        }
       }
       return t;
     });
@@ -129,14 +138,21 @@ function ToDoList() {
     });
     setTasks(tasksEdit);
     setShowEdit(false);
+    showHideNotification("Edit done");
     localStorage.setItem("tasks", JSON.stringify(tasksEdit));
   }
+  const taskComleted = useMemo(() => {
+    return tasks.filter((t) => {
+      return t.isCompleted;
+    });
+  }, [tasks]);
+  const taskNotComleted = useMemo(() => {
+    return tasks.filter((t) => {
+      return !t.isCompleted;
+    });
+  }, [tasks]);
   const tasksList = (
-    test == "All"
-      ? tasks
-      : test == "Completed"
-        ? tasks.filter((t) => t.isCompleted)
-        : tasks.filter((t) => !t.isCompleted)
+    test == "All" ? tasks : test == "Completed" ? taskComleted : taskNotComleted
   ).map((task) => {
     return (
       <ToDo
@@ -260,6 +276,7 @@ function ToDoList() {
         <button
           className="delete-all-btn"
           onClick={() => {
+            showHideNotification("Delete all done");
             setTasks([]);
             localStorage.setItem("tasks", JSON.stringify([]));
           }}
