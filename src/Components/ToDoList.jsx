@@ -94,6 +94,7 @@ function ToDoList() {
   }
   function handleAddClick() {
     setTasks([...tasks, { id: id, name: inputValue, isCompleted: false }]);
+    showHideNotification("Add done");
     localStorage.setItem(
       "tasks",
       JSON.stringify([
@@ -103,7 +104,6 @@ function ToDoList() {
     );
     setId((id) => id + 1);
     setInputValue("");
-    showHideNotification("Add done");
   }
   function handleDeleteClick(id) {
     const tasksFilter = tasks.filter((task) => {
@@ -112,6 +112,7 @@ function ToDoList() {
     setTasks(tasksFilter);
     setShow(false);
     showHideNotification("Delete done");
+    localStorage.setItem("tasks",JSON.stringify(tasksFilter));
   }
   function handleCheckClick(id) {
     let tasksCheck = tasks.map((t) => {
