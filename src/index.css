@@ -115,6 +115,9 @@ body {
   }
 }
 @media (max-width: 768px) {
+  .to-do-list {
+    top: 20px !important;
+  }
   .to-do-list,
   .popup-box {
     width: 90% !important;
