@@ -118,10 +118,10 @@ function ToDoList() {
       if (t.id == id) {
         if (t.isCompleted == true) {
           t.isCompleted = false;
-          showHideNotification("Uncheck done");
+          showHideNotification("Not Completed");
         } else {
           t.isCompleted = true;
-          showHideNotification("Check done");
+          showHideNotification("Completed");
         }
       }
       return t;

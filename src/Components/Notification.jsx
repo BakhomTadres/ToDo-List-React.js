@@ -9,7 +9,7 @@ export default function Notification({ message }) {
             ? "info"
             : message == "Delete done" ||
                 message == "Delete all done" ||
-                message == "Uncheck done"
+                message == "Not Completed"
               ? "error"
               : "success"
         }
