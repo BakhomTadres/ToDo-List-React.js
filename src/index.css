@@ -88,6 +88,7 @@ body {
   width: calc(100% - 160px);
   padding: 10px 20px;
   border-radius: 6px;
+  overflow-wrap: break-word;
 }
 .task-item button {
   width: 40px;
