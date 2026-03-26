@@ -36,7 +36,7 @@ function ToDoList() {
   }, [tasks]);
   useEffect(() => {
     dispatch({ type: "getTasks" });
-    setId(JSON.parse(localStorage.getItem("id")));
+    setId(JSON.parse(localStorage.getItem("id")) || 1);
   }, []);
   // Functions For ToDo
   function handleDeleteToDo(id) {
