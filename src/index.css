@@ -86,9 +86,8 @@ body {
   color: var(--primary-color);
   background-color: #eee;
   width: calc(100% - 160px);
-  padding: 10px 20px 0px 20px;
+  padding: 10px 20px;
   border-radius: 6px;
-  overflow-x: scroll;
 }
 .task-item button {
   width: 40px;

@@ -1,10 +1,11 @@
-import { use, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ToDo from "./ToDo";
 import Popup from "./Popup";
-import { useContext } from "react";
-import { NotificationContext } from "../Contexts/NotificationContext";
+import { useNotification } from "../Contexts/NotificationContext";
+import { useTasks } from "../Contexts/ReducerContext";
 function ToDoList() {
-  const { showHideNotification } = useContext(NotificationContext);
+  const { tasks, dispatch } = useTasks();
+  const { showHideNotification } = useNotification();
   const [allNumber, setAllNumber] = useState(() => {
     return Number(localStorage.getItem("allNumber")) || 0;
   });
@@ -13,7 +14,6 @@ function ToDoList() {
   });
   const [id, setId] = useState(1);
   const [inputValue, setInputValue] = useState("");
-  const [tasks, setTasks] = useState([]);
   const [test, setTest] = useState("All");
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -21,21 +21,9 @@ function ToDoList() {
   const [idEdit, setIdEdit] = useState(0);
   const [editName, setEditname] = useState("");
   const [buttons, setButtons] = useState([
-    {
-      id: 1,
-      name: "All",
-      active: true,
-    },
-    {
-      id: 2,
-      name: "Completed",
-      active: false,
-    },
-    {
-      id: 3,
-      name: "Not Completed",
-      active: false,
-    },
+    { id: 1, name: "All", active: true },
+    { id: 2, name: "Completed", active: false },
+    { id: 3, name: "Not Completed", active: false },
   ]);
   useEffect(() => {
     setAllNumber(tasks.length);
@@ -47,27 +35,8 @@ function ToDoList() {
     );
   }, [tasks]);
   useEffect(() => {
-    const savedData = localStorage.getItem("tasks");
-    if (savedData) {
-      try {
-        const savedTasks = JSON.parse(savedData);
-        if (Array.isArray(savedTasks) && savedTasks.length > 0) {
-          setTasks(savedTasks);
-          const maxId = Math.max(...savedTasks.map((t) => t.id));
-          setId(maxId + 1);
-        } else {
-          setTasks([]);
-          setId(1);
-        }
-      } catch (error) {
-        console.error("Error parsing tasks:", error);
-        setTasks([]);
-        setId(1);
-      }
-    } else {
-      setTasks([]);
-      setId(1);
-    }
+    dispatch({ type: "getTasks" });
+    setId(JSON.parse(localStorage.getItem("id")));
   }, []);
   // Functions For ToDo
   function handleDeleteToDo(id) {
@@ -93,54 +62,34 @@ function ToDoList() {
     setButtons(newButtons);
   }
   function handleAddClick() {
-    setTasks([...tasks, { id: id, name: inputValue, isCompleted: false }]);
+    dispatch({
+      type: "add",
+      payload: {
+        id: JSON.parse(localStorage.getItem("id")),
+        title: inputValue,
+      },
+    });
     showHideNotification("Add done");
-    localStorage.setItem(
-      "tasks",
-      JSON.stringify([
-        ...tasks,
-        { id: id, name: inputValue, isCompleted: false },
-      ]),
-    );
-    setId((id) => id + 1);
+    setId((idLocal) => idLocal + 1);
+    JSON.stringify(localStorage.setItem("id", id + 1));
     setInputValue("");
   }
   function handleDeleteClick(id) {
-    const tasksFilter = tasks.filter((task) => {
-      return task.id !== id;
-    });
-    setTasks(tasksFilter);
+    dispatch({ type: "delete", payload: { id: id } });
     setShow(false);
     showHideNotification("Delete done");
-    localStorage.setItem("tasks",JSON.stringify(tasksFilter));
   }
   function handleCheckClick(id) {
-    let tasksCheck = tasks.map((t) => {
-      if (t.id == id) {
-        if (t.isCompleted == true) {
-          t.isCompleted = false;
-          showHideNotification("Not Completed");
-        } else {
-          t.isCompleted = true;
-          showHideNotification("Completed");
-        }
-      }
-      return t;
-    });
-    setTasks(tasksCheck);
-    localStorage.setItem("tasks", JSON.stringify(tasksCheck));
+    const task = tasks.find((t) => t.id === id);
+    dispatch({ type: "check", payload: { id: id } });
+    task.isCompleted
+      ? showHideNotification("Not Completed")
+      : showHideNotification("Completed");
   }
   function handleEditClick(id, name) {
-    let tasksEdit = tasks.map((t) => {
-      if (t.id == id) {
-        t.name = name;
-      }
-      return t;
-    });
-    setTasks(tasksEdit);
+    dispatch({ type: "edit", payload: { id: id, name: name } });
     setShowEdit(false);
     showHideNotification("Edit done");
-    localStorage.setItem("tasks", JSON.stringify(tasksEdit));
   }
   const taskComleted = useMemo(() => {
     return tasks.filter((t) => {
@@ -255,7 +204,7 @@ function ToDoList() {
                       localStorage.getItem("allNumber")) *
                     100
                   ).toFixed(2)
-                : 0}
+                : "0.00"}
               %
             </span>
           </div>
@@ -278,7 +227,9 @@ function ToDoList() {
           className="delete-all-btn"
           onClick={() => {
             showHideNotification("Delete all done");
-            setTasks([]);
+            dispatch({
+              type: "deleteAll",
+            });
             localStorage.setItem("tasks", JSON.stringify([]));
           }}
         >
